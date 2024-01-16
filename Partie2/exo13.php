@@ -1,6 +1,6 @@
 <h1>Exercice 13</h1>
 
-<p>Créer une classe Voiture possédant les propriétés suivantes : marque, modèle, nbPortes...</p><br>
+<p>Créer une classe Voiture possédant les propriétés suivantes : marque, modele, nbPorte...</p><br>
 
         <h2>Résultat</h2>
        
@@ -12,135 +12,114 @@
 
 
 class Voiture {
-        private string $marques;
-        private string $modèles;
-        private int $nbPortes;
+        private string $marque;
+        private string $modele;
+        private int $nbPorte;
         private int $vitesseActuelle;
         private bool $statut;
-        private int $vitesse;
 
 
         
-        public function __construct(string $marques, string $modèles, int $nbPortes, bool $statut, int $vitesse){
-            $this->marques = $marques;
-            $this->modèles = $modèles;
-            $this->nbPortes = $nbPortes;
+        public function __construct(string $marque, string $modele, int $nbPorte){
+            $this->marque = $marque;
+            $this->modele = $modele;
+            $this->nbPorte = $nbPorte;
             $this->vitesseActuelle = 0;
-            $this->statut = $statut;
-            $this->vitesse = $vitesse;
+            $this->statut = false;
         }
 
-        public function getMarques(): string {return $this->marques;}
-        public function getModèles(): string {return $this->modèles;}
-        public function getNbPortes(): int {return $this->nbPortes;}
+        public function getMarque(): string {return $this->marque;}
+        public function getModele(): string {return $this->modele;}
+        public function getNbPorte(): int {return $this->nbPorte;}
         public function getVitesseActuelle(): int {return $this->vitesseActuelle;}
         public function getStatut(): bool {return $this->statut;}
-        public function getVitesse(): int {return $this->vitesse;}
+        public function getStatutTexte() {
+                if ($this->statut){
+                    echo "démarrer";
+                }else{
+                    echo "stopper";
+                }
+        }
 
-        public function setMarques($marques){return $this->marques = $marques;}
-        public function setModèles($modèles){return $this->modèles = $modèles;}
-        public function setNbPortes($nbPortes){return $this->nbPortes = $nbPortes;}
+        public function setMarque($marque){return $this->marque = $marque;}
+        public function setModele($modele){return $this->modele = $modele;}
+        public function setNbPorte($nbPorte){return $this->nbPorte = $nbPorte;}
         public function setVitesseActuelle($vitesseActuelle){return $this->vitesseActuelle = $vitesseActuelle;}
         public function setStatut($statut){return $this->statut = $statut;}
-        public function setVitesse($vitesse){return $this->vitesse = $vitesse;}
-
         
 
-
-
+        
         public function demarrer(){
-                   if($this->statut == true){
-                    echo "démarre";
-                    }else{
-                        echo "démarré";
-                    }
-                   }
+           if ($this->statut){
+               echo "la voiture est déjà démarrée";
+              }else{
+                $this->statut = true;
+                echo "La voiture $this est démarré";
+              }
+        }
+    
         
 
-        public function accelerer(){
-                    switch ($this->vitesse){
-                        case 20 :
-                            echo " accélerer de 20 ";
-                            break;
-                        case 50 :
-                            echo " accélère de 50 ";
-                            break;
-                        default : 
-                            echo " n'accélère pas ";
-                    }
-                 
+        public function accelerer(int $vitesse){
+            if($this->statut) {
+                $this->vitesseActuelle += $vitesse;
+                echo "La voiture accelère de $vitesse km/h";
+            } else {
+                echo "Pour accélerer, il faut démarrer le véhicule !";
+            }
         }
 
         public function stopper(){
-                    if ($this->statut == true){
-                        echo "est à l'arret";
-                    }else{
-                        echo "roule";
-                    }
+            if($this->statut) {
+                echo " est déjà démarrée !";
+            } else {
+                $this->statut = false;
+                $this->vitesseActuelle = 0;
+                echo "est à l'arret";
+            }
         }
 
-        public function ralentir(){
-            switch ($this->vitesse){
-                case 20 :
-                    echo " ralentit de 20 ";
-                    break;
-                case 50 :
-                    echo " ralentit de 50 ";
-                    break;
-                default : 
-                    echo " ne ralentit pas ";
+        public function ralentir(int $vitesse){
+            if($this->statut) {
+                if ($this->vitesseActuelle > $vitesse) {
+                    $this->vitesseActuelle -= $vitesse;
+                    echo "La voiture ralentit de $vitesse km/h";
+                }else{
+                    echo "La voiture ne peut pas ralentir autant !";
+                }
+
+            } else {
+                echo "La voiture ne roule pas !";
+            }
+
         }
-    }
+
+        public function getInfo(){
+            echo "Infos véhicule <br>";
+            echo "******************<br>";
+            echo "Nom et modele du véhicule : " . $this . "<br>";
+            echo "Nombre de portes : " . $this->getNbPorte() . "<br>";
+            echo "Le véhicule " . $this . " est ";
+            echo  $this->getStatutTexte() . "<br>";
+            echo "Sa vitesse actuelle est de : " . $this->getVitesseActuelle() . " km / h<br><br>";
+        }
+
+
+            public function __toString(){
+                return $this->marque . " " . $this ->modele;
+            }
+    
 }
 
-    $v1 = new Voiture("Peugeot", "408", 5, false, 50);
-    $v2 = new Voiture("BMW", "535D", 5, true, 0);
-    $v3 = new Voiture("Porshe", "911", 3, true, 0);
-    $v4 = new Voiture("Mercedes", "500SL", 3, true, 0);
+    $v1 = new Voiture("Peugeot", "408", 5);
+    $v2 = new Voiture("BMW", "535D", 5);
+    $v3 = new Voiture("Porshe", "911", 3);
+    $v4 = new Voiture("Mercedes", "500SL", 3);
 
-    $v1->setVitesseActuelle(50);
-
-    echo "Infos véhicule 1<br>";
-    echo "******************<br>";
-    echo "Nom et modèle du véhicule : " . $v1->getMarques() . " " . $v1->getModèles() . "<br>";
-    echo "Nombre de portes : " . $v1->getNbPortes() . "<br>";
-    echo "Le véhicule " . $v1->getMarques() . " est ";
-    echo  $v1->demarrer() . "<br>";
-    echo "Sa vitesse actuelle est de : " . $v1->getVitesseActuelle() . " km / h<br><br>";
-
-    echo "Infos véhicule 2<br>";
-    echo "******************<br>";
-    echo "Nom et modèle du véhicule : " . $v2->getMarques() . " " . $v2->getModèles() . "<br>";
-    echo "Nombre de portes : " . $v2->getNbPortes() . "<br>";
-    echo "Le véhicule " . $v2->getMarques() ." ";
-    echo  $v2->stopper() . "<br>";
-    echo "Sa vitesse actuelle est de : " . $v2->getVitesseActuelle() . " km / h<br><br>";
-
-    $v1->setVitesseActuelle("0");
-    $v1->setStatut(true);
-    $v2->setVitesse(20);
-    
-    
-    echo "Le véhicule " . $v1->getMarques() . " " . $v1->getModèles() . " ";
-    echo $v1->demarrer() . "<br>";
-    echo "Le véhicule " . $v1->getMarques() . " " . $v1->getModèles() . " ";
-    echo $v1->accelerer() ." km / h <br>";
-    echo "Le véhicule " . $v2->getMarques() . " " . $v2->getModèles() . " ";
-    echo $v1->demarrer() . "<br>";
-    echo "Le véhicule " . $v2->getMarques() ." ";
-    echo  $v2->stopper() . "<br>";
-    echo "Le véhicule " . $v2->getMarques() . " " . $v2->getModèles() . " veut ";
-    echo $v2->accelerer() . " <br>";
-    echo "Pour ";
-    echo $v2->accelerer() . ", il faut démarrer le véhicule " . $v2->getMarques() . " " . $v2->getModèles() . " !<br>";
-
-    $v1->setVitesseActuelle("50");
-
-    echo "La vitesse du véhicule " . $v1->getMarques() . " " . $v1->getModèles() . " est de " . $v1->getVitesseActuelle() . " km / h <br>";
-    echo "La vitesse du véhicule " . $v2->getMarques() . " " . $v2->getModèles() . " est de " . $v2->getVitesseActuelle() . " km / h <br>";
-
-
-
-
+    echo "<br>" . $v1->demarrer();
+    echo "<br>" . $v1->accelerer(50) . "<br>";
+    echo "<br>" . $v1->ralentir(80) . "<br>";
+    echo $v1->getInfo() . "<br>";
+    echo $v2->getInfo();
 
 ?> 

@@ -8,10 +8,10 @@
 <?php
    
   class voiture {
-    protected $marque;
-    protected $modèle;
+    protected string $marque;
+    protected string $modèle;
     
-  public function __construct($marque, $modèle){
+  public function __construct(string $marque, string $modèle){
    $this->marque = $marque;
    $this->modèle = $modèle;
 }

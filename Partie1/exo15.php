@@ -10,18 +10,18 @@
          class Personne {
             public string $nom;
             public string $prenom;
-            public string $dateNaissance;
+            public DateTime $dateNaissance;
          
 
          public function __construct(string $nom, string $prenom, string $dateNaissance) {
             $this->nom = $nom;
             $this->prenom = $prenom;
-            $this->dateNaissance = $dateNaissance;
+            $this->dateNaissance = new DateTime($dateNaissance);
          }
 
          public function getNom(): string {return $this->nom;}
          public function getPrenom(): string {return $this->prenom;}
-         public function getDateNaissanse(): string {return $this->dateNaissance;}
+         public function getDateNaissanse(): DateTime {return $this->dateNaissance;}
 
          public function setNom($nom): string {return $this->nom = $nom;}
          public function setPrenom($prenom): string {return $this->prenom = $prenom;}
@@ -30,15 +30,18 @@
 
          public function calculerAge() {
             $dateActuelle = new DateTime();
-            $dateNaissance = new DateTime($this->dateNaissance);
-            $age = $dateActuelle->diff($dateNaissance);
+            $age = $this->dateNaissance->diff($dateActuelle);
             return $age->y;
          }
-        } 
+
+         public function __toString() {
+            return  $this->prenom . " " . $this->nom . " a  " . $this->calculerAge() . " ans" . "<br>";
+         }
+      } 
 
         $p1 = new Personne("DUPONT", "Michel", "1980-02-19");
         $p2 = new Personne("DUCHEMIN", "Alice", "1985-01-17");
 
-        echo  $p1->prenom . " " . $p1->nom . " a  " . $p1->calculerAge() . " ans" . "<br>";
-        echo  $p2->prenom . " " . $p2->nom . " a  " . $p2->calculerAge() . " ans";
+        echo  $p1;
+        echo  $p2;
     ?> 
