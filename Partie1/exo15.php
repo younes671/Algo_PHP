@@ -6,6 +6,7 @@
     <h2>Résultat</h2>
 
     <?php
+    // classe Personne
          class Personne {
             public string $nom;
             public string $prenom;
